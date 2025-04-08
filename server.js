@@ -23,6 +23,7 @@ const ScoreSchema = new mongoose.Schema({
 const Score = mongoose.model('Score', ScoreSchema);
 
 // Save score endpoint
+// Save score endpoint
 app.post('/save-score', async (req, res) => {
   const { username, score } = req.body;
   try {
@@ -35,4 +36,5 @@ app.post('/save-score', async (req, res) => {
   }
 });
 
-app.listen(3000, () => console.log('Server running on port 3000'));
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
