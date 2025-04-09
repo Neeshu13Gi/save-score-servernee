@@ -69,10 +69,11 @@ mongoose.connect('mongodb+srv://neeshu:YC7pQ0Unf32NKHi7@neeshu.cwxzomm.mongodb.n
 
 // Schema and model
 const ScoreSchema = new mongoose.Schema({
-  name: String,                    // New: user's name
-  score: Number,                  // User's score
-  timestamp: { type: Date, default: Date.now } // Auto time
+  username: String,         // change this from `name` to `username`
+  score: Number,
+  timestamp: { type: Date, default: Date.now }
 });
+
 
 const Score = mongoose.model('Score', ScoreSchema);
 
