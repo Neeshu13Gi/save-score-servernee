@@ -48,6 +48,62 @@
 
 
 
+// const express = require('express');
+// const mongoose = require('mongoose');
+// const cors = require('cors');
+// const bodyParser = require('body-parser');
+
+// const app = express();
+
+// // Middleware
+// app.use(cors());
+// app.use(bodyParser.json());
+
+// // MongoDB connection
+// mongoose.connect('mongodb+srv://neeshu:YC7pQ0Unf32NKHi7@neeshu.cwxzomm.mongodb.net/scoreDB?retryWrites=true&w=majority', {
+//   useNewUrlParser: true,
+//   useUnifiedTopology: true
+// })
+// .then(() => console.log('✅ MongoDB connected'))
+// .catch(err => console.error('❌ Mongo error:', err));
+
+// // Schema and model
+// const ScoreSchema = new mongoose.Schema({
+//   username: String,         // change this from `name` to `username`
+//   score: Number,
+//   timestamp: { type: Date, default: Date.now }
+// });
+
+
+// const Score = mongoose.model('Score', ScoreSchema);
+
+// // POST endpoint to save name and score
+// app.post('/save-score', async (req, res) => {
+//   const { name, score } = req.body;
+
+//   // Optional: Basic validation
+//   if (!name || typeof score !== 'number') {
+//     return res.status(400).send('Invalid name or score');
+//   }
+
+//   try {
+//     const newScore = new Score({ name, score });
+//     await newScore.save();
+//     res.status(200).send('✅ Score and name saved successfully!');
+//   } catch (err) {
+//     console.error(err);
+//     res.status(500).send('❌ Error saving data');
+//   }
+// });
+
+// // Start server
+// const PORT = process.env.PORT || 3000;
+// app.listen(PORT, () => {
+//   console.log(`🚀 Server running on port ${PORT}`);
+// });
+
+
+
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
@@ -69,21 +125,22 @@ mongoose.connect('mongodb+srv://neeshu:YC7pQ0Unf32NKHi7@neeshu.cwxzomm.mongodb.n
 
 // Schema and model
 const ScoreSchema = new mongoose.Schema({
-  username: String,         // change this from `name` to `username`
+  name: String, // Keeping it 'name' to match Construct 3
   score: Number,
   timestamp: { type: Date, default: Date.now }
 });
-
 
 const Score = mongoose.model('Score', ScoreSchema);
 
 // POST endpoint to save name and score
 app.post('/save-score', async (req, res) => {
+  console.log('📦 Received body:', req.body); // Debugging line
+
   const { name, score } = req.body;
 
-  // Optional: Basic validation
+  // Basic validation
   if (!name || typeof score !== 'number') {
-    return res.status(400).send('Invalid name or score');
+    return res.status(400).send('❌ Invalid name or score');
   }
 
   try {
@@ -91,7 +148,7 @@ app.post('/save-score', async (req, res) => {
     await newScore.save();
     res.status(200).send('✅ Score and name saved successfully!');
   } catch (err) {
-    console.error(err);
+    console.error('❌ Error saving score:', err);
     res.status(500).send('❌ Error saving data');
   }
 });
